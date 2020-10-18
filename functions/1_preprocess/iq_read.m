@@ -9,8 +9,6 @@ function iq_data_raw = iq_read(file_name, file_datatype, ...
     %   > file_datatype:    Format of data values, e.g. 'double'
     %   > frame_count:      Number of frames to read into iq_data_raw
     %                       Set to inf to read entire file
-    %                       (Note: Might read < frame_count, if there is a 
-    %                       frame offset in the binary file)
     %   > file_offset:      Offset in binary file
     %   > dab_mode:         Structure containing constants for DAB mode
     %
