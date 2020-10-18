@@ -18,7 +18,7 @@ function dab_data = demodulate(dab_frame, dab_mode)
     %% OFDM MUX
     dab_carriers = ofdm_demux(dab_symbols);
     
-    %% DQPSK EXTRACT
+    %% DQPSK DEMAP
     dab_data_raw = dqpsk_demap(dab_carriers, dab_mode);
     
     %% FREQ DEINTERLEAVE
@@ -28,7 +28,7 @@ function dab_data = demodulate(dab_frame, dab_mode)
     %% DQPSK SNAP
     dab_data_snapped = dqpsk_snap(dab_data_deinterleaved);
     
-    %% ERROR CORRECTION
+    %% ERROR CORRECTION (Not yet implemented)
     dab_data = error_correct(dab_data_snapped);
 
 end

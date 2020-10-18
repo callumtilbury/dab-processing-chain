@@ -1,5 +1,16 @@
-function prs = build_prs() % TODO: Add different mode options
-    % LUTs for MODE I:
+function prs = build_prs() % Todo: Add switch for other modes
+    % ---------------------------------------------------------------------    
+    % BUILD_PRS: Return phase reference symbol (currently for Mode 1 only)
+    % ---------------------------------------------------------------------
+    % Usage:
+    %  Inputs
+    %               n/a
+    %
+    %  Outputs
+    %   > prs:      Phase Reference Symbol (for Mode 1)
+    %
+    % ---------------------------------------------------------------------
+    % LUTs for Mode 1:
     k_table = [[-768, -737, 0, 1]
                [-736, -705, 1, 2]
                [-704, -673, 2, 0]
@@ -58,14 +69,13 @@ function prs = build_prs() % TODO: Add different mode options
     prs = zeros(2048,1);
     idx_offset = 1025;
 
+    % Calculated according to PRS generator algorithm
+    % For more info, see DAB Standard document
     for r = k_table'
         for c = r(1):r(2)
             phi = pi/2 * (k_time_frequency_phase_table(r(3)+1,c-r(1)+1) + r(4));
             prs(c + idx_offset) = exp(1j*phi);
         end
     end
-
-    clear k_table;
-    clear k_time_frequency_phase_table;
     
 end
