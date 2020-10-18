@@ -12,6 +12,5 @@ function dab_frame_remod = symbols_pack(dab_symbols_remod, dab_mode)
         % Jump ahead by one block length
         t_idx = t_idx + dab_mode.Ts;
     end
-    
-    dab_frame_remod = dab_frame_remod;%.';
+
 end
