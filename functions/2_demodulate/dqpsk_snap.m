@@ -8,7 +8,7 @@ function dab_data_snapped = dqpsk_snap(dab_data_deinterleaved)
     %                               [dab_mode.L x dab_mode.K]
     %
     %  Outputs
-    %   < dab_data_snapped:     Snapped DQPSK symbols
+    %   < dab_data_snapped:     Snapped DQPSK data
     %                            [dab_mode.L x dab_mode.K]
     %
     % ---------------------------------------------------------------------

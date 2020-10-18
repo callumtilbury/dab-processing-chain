@@ -8,7 +8,7 @@ function dab_data_raw = dqpsk_demap(dab_carriers, dab_mode)
     %   > dab_mode:         Structure containing constants for DAB mode
     %
     %  Outputs
-    %   < dab_data_raw:     Extracted DQPSK symbols, unsnapped,
+    %   < dab_data_raw:     Extracted DQPSK data, unsnapped,
     %                        [dab_mode.L x dab_mode.Tu]
     %
     % ---------------------------------------------------------------------
