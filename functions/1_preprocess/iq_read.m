@@ -1,6 +1,23 @@
-function iq_data_raw = iq_read(file_name, file_datatype, frame_count, file_offset, dab_mode)
-    %IQ_READ Summary of this function goes here
-    %   Detailed explanation goes here
+function iq_data_raw = iq_read(file_name, file_datatype, ...
+        frame_count, file_offset, dab_mode)
+    % ---------------------------------------------------------------------    
+    % IQ_READ: Reads in complex (IQ) data from a binary file
+    % ---------------------------------------------------------------------
+    % Usage:
+    %  Inputs
+    %   > file_name:        Name of Binary File
+    %   > file_datatype:    Format of data values, e.g. 'double'
+    %   > frame_count:      Number of frames to read into iq_data_raw
+    %                       Set to inf to read entire file
+    %                       (Note: Might read < frame_count, if there is a 
+    %                       frame offset in the binary file)
+    %   > file_offset:      Offset in binary file
+    %   > dab_mode:         Structure containing constants for DAB mode
+    %
+    %  Outputs
+    %   < iq_data_raw:      Complex IQ data
+    %
+    % ---------------------------------------------------------------------
 
     % Open file
     file_id = fopen(file_name);
