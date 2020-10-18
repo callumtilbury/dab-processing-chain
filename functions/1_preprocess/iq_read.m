@@ -24,12 +24,13 @@ function iq_data_raw = iq_read(file_name, file_datatype, ...
     
     % Offset from beginning of file
     if (file_datatype == "short")
-        fseek(file_id, 2*4*file_offset, 'bof'); % 4 bytes per short
+        fseek(file_id, 2*4*file_offset, 'bof'); % 4 bytes per short (x2 for cmplx)
     elseif (file_datatype == "double")
-        fseek(file_id, 2*8*file_offset, 'bof');  % 8 bytes per double
+        fseek(file_id, 2*8*file_offset, 'bof');  % 8 bytes per double (x2 for cmplx)
     end
 
-    % Read in data (x2 because data is cmplx)
+    % Read in data (x2 for cmplx)
+    %   Note: Read in one extra frame here to extract enough *full* frames
     iq_data_all = fread(file_id, 2*dab_mode.Tf*(frame_count+1), file_datatype);
     
     % Close file
