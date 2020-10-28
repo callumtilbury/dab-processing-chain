@@ -1,4 +1,4 @@
-function dab_data = demodulate(dab_frame, dab_mode)
+function [dab_data, dab_carriers] = demodulate(dab_frame, dab_mode)
     % ---------------------------------------------------------------------    
     % DEMODULATE: 
     % ---------------------------------------------------------------------
@@ -9,7 +9,9 @@ function dab_data = demodulate(dab_frame, dab_mode)
     %
     %  Outputs
     %   < dab_data:         Demodulated data of the given DAB frame
-    %
+    %   
+    %  Utility Outputs for ref_builer.m:
+    %   < dab_carriers:     Demultiplexed OFDM carriers
     % ---------------------------------------------------------------------
 
     %% SYMBOLS UNPACK
