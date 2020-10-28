@@ -5,7 +5,7 @@ function dab_carriers_remod = dqpsk_map(dab_data_interleaved, prs, dab_mode)
     % Usage:
     %  Inputs
     %   > dab_data_interleaved: Deinterleaved DQPSK data
-    %                               [dab_mode.L x dab_mode.Tu]
+    %                               [(dab_mode.L - 1) x dab_mode.Tu]
     %   > prs:                  Phase reference symbol
     %                            Used as a reference for the *differential*
     %                             phase modulation
@@ -25,7 +25,7 @@ function dab_carriers_remod = dqpsk_map(dab_data_interleaved, prs, dab_mode)
     for ii = 2:dab_mode.L
         % Carriers are modulated using the interleaved data multiplied by
         % the phase of the previous carrier (*Differential*-QPSK)
-        dab_carriers_remod(ii,:) = dab_carriers_remod(ii-1,:) ...
-                                .* dab_data_interleaved(ii,:);
+        dab_carriers_remod(ii,:) = dab_data_interleaved(ii-1,:) ...
+                                .* dab_carriers_remod(ii-1,:);
     end
 end

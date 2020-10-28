@@ -5,11 +5,12 @@ function dab_frame_remod = remodulate(dab_data, dab_mode)
     % Usage:
     %  Inputs
     %   > dab_data:         Demodulated data of a DAB frame
+    %                           [(dab_mode.L - 1) x dab_mode.K]
     %   > dab_mode:         Structure containing constants for DAB mode
     %
     %  Outputs
     %   > dab_frame_remod:  IQ data of a single DAB frame, with PRS aligned
-    %
+    %                           [1 x dab_mode.Tf]
     % ---------------------------------------------------------------------
     %% FREQ INTERLEAVE
     interleave_map = build_interleave_map();

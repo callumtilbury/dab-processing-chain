@@ -7,7 +7,7 @@ function dab_data_interleaved = freq_interleave(dab_data, interleave_map, dab_mo
     %  Inputs
     %   > dab_data:                 Uninterleaved snapped DQPSK data
     %                               (output of the demodulator block)
-    %                                   [dab_mode.L x dab_mode.K]
+    %                                   [(dab_mode.L - 1) x dab_mode.K]
     %   > interleave_map:           Interleave map
     %                               (Note: the interleave and deinterleave
     %                               functions use the same interleaving
@@ -17,12 +17,12 @@ function dab_data_interleaved = freq_interleave(dab_data, interleave_map, dab_mo
     %
     %  Outputs
     %   < dab_data_interleaved:     Interleaved DQPSK data
-    %                                   [dab_mode.L x dab_mode.Tu]
+    %                                   [(dab_mode.L - 1) x dab_mode.Tu]
     %
     % ---------------------------------------------------------------------
 
     % Pre-allocate
-    dab_data_interleaved = zeros(dab_mode.L,dab_mode.Tu);
+    dab_data_interleaved = zeros(dab_mode.L-1,dab_mode.Tu);
     
     % Use interleave map
     dab_data_interleaved(:,interleave_map) = dab_data;
