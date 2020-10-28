@@ -6,7 +6,7 @@ function dab_data_deinterleaved = freq_deinterleave(dab_data_raw, interleave_map
     % Usage:
     %  Inputs
     %   > dab_data_raw:             Raw DQPSK data,
-    %                                   [dab_mode.L x dab_mode.Tu]
+    %                                   [(dab_mode.L - 1) x dab_mode.Tu]
     %   > interleave_map:           Deinterleave map
     %                               (Note: the interleave and deinterleave
     %                               functions use the same interleaving

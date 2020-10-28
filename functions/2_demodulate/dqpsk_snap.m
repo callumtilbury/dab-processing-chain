@@ -5,11 +5,11 @@ function dab_data_snapped = dqpsk_snap(dab_data_deinterleaved)
     % Usage:
     %  Inputs
     %   > dab_data_deinterleaved:   Deinterleaved DQPSK data,
-    %                               [dab_mode.L x dab_mode.K]
+    %                               [(dab_mode.L - 1) x dab_mode.K]
     %
     %  Outputs
     %   < dab_data_snapped:     Snapped DQPSK data
-    %                            [dab_mode.L x dab_mode.K]
+    %                            [(dab_mode.L - 1) x dab_mode.K]
     %
     % ---------------------------------------------------------------------
     % Apply snapper function to entire input matrix
