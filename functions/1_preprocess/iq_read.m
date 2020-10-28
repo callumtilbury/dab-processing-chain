@@ -29,13 +29,13 @@ function iq_data_raw = iq_read(file_name, file_datatype, ...
 
     % Read in data (x2 for cmplx)
     %   Note: Read in one extra frame here to extract enough *full* frames
-    iq_data_all = fread(file_id, 2*dab_mode.Tf*(frame_count+1), file_datatype);
+    data_from_file = fread(file_id, 2*dab_mode.Tf*(frame_count+1), file_datatype);
     
     % Close file
     fclose(file_id);
 
     % Convert data to Complex Doubles
-    iq_data_raw = iq_data_all(1:2:end) + 1j*iq_data_all(2:2:end);
+    iq_data_raw = data_from_file(1:2:end) + 1j*data_from_file(2:2:end);
     clear data_all;
        
 end
