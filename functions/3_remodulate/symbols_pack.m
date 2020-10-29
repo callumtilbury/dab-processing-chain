@@ -20,15 +20,15 @@ function dab_frame_remod = symbols_pack(dab_symbols_remod, dab_mode)
     t_idx = dab_mode.Tnull + 1;
 
     % Go through each symbol
-    for ii = 1:dab_mode.L
-        % Guard interval
-        dab_frame_remod(t_idx:t_idx+dab_mode.Tg-1) = ...
-            dab_symbols_remod(ii,dab_mode.Tu-dab_mode.Tg+1:dab_mode.Tu);
-        
-        % Symbol
-        dab_frame_remod(t_idx+dab_mode.Tg:t_idx+dab_mode.Tg+dab_mode.Tu-1) ...
-            = dab_symbols_remod(ii,:);
-        
+    for l = 1:dab_mode.L
+        % Guard interval is last Tg values
+        lth_guard = dab_symbols_remod(l, end - dab_mode.Tg + 1 : end);
+        % Full Symbol = Guard + Original Symbol
+        lth_symbol = [lth_guard, dab_symbols_remod(l,:)];
+
+        % Add this symbol to the output frame
+        dab_frame_remod(t_idx : t_idx + dab_mode.Ts - 1) = lth_symbol;
+   
         % Jump ahead by one symbol length
         t_idx = t_idx + dab_mode.Ts;
     end
