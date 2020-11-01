@@ -22,10 +22,10 @@ function dab_carriers_remod = dqpsk_map(dab_data_interleaved, prs, dab_mode)
     % First carrier is the phase reference symbol (transposed)
     dab_carriers_remod(1,:) = prs.';
 
-    for ii = 2:dab_mode.L
+    for l = 2:dab_mode.L
         % Carriers are modulated using the interleaved data multiplied by
         % the phase of the previous carrier (*Differential*-QPSK)
-        dab_carriers_remod(ii,:) = dab_data_interleaved(ii-1,:) ...
-                                .* dab_carriers_remod(ii-1,:);
+        dab_carriers_remod(l,:) = dab_data_interleaved(l-1,:) ...
+                                .* dab_carriers_remod(l-1,:);
     end
 end

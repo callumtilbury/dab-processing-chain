@@ -19,13 +19,13 @@ function dab_symbols = symbols_unpack(dab_frame, dab_mode)
     % Start after null & first guard interval
     % Note: If misaligned _earlier_ is okay, but cannot be later! (Because
     % of cyclic guard interval with cyclic prefix)
-    ii = dab_mode.Tnull + dab_mode.Tg + 1;
+    idx = dab_mode.Tnull + dab_mode.Tg + 1;
     
-    for l = 1:dab_mode.L
+    for l = 1:dab_mode.L % In total, read L symbols
         % Read symbol
-        dab_symbols(l,:) = dab_frame(ii:ii+dab_mode.Tu-1);
+        dab_symbols(l,:) = dab_frame(idx:idx+dab_mode.Tu-1);
         % Jump ahead 1 symbol, incl. guard
-        ii = ii + dab_mode.Ts;
+        idx = idx + dab_mode.Ts;
     end
 
 end
