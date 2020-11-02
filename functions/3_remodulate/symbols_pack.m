@@ -15,7 +15,7 @@ function dab_frame_remod = symbols_pack(dab_symbols_remod, dab_mode)
     % ---------------------------------------------------------------------
     
     % Pre-allocate
-    dab_frame_remod = zeros(dab_mode.Tf,1);
+    dab_frame_remod = zeros(1,dab_mode.Tf);
     % Data elements in null symbol are zero, so just skip it
     t_idx = dab_mode.Tnull + 1;
 
