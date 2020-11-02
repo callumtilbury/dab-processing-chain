@@ -19,7 +19,7 @@ function prs_idx = prs_detect(iq_data, prs, dab_mode)
     for ii = 1:dab_mode.Tu/2:length(iq_data)
         % Apply matched filter in frequency domain,
         %   using a window length of dab_mode.Tu
-        MF_out = conj(prs) .* fftshift(fft(iq_data(ii:ii+dab_mode.Tu-1)));   
+        MF_out = conj(prs) .* fftshift(fft(iq_data(ii:ii+dab_mode.Tu-1)));
         % Bring back to time
         mf_out = abs(ifft(MF_out));
         % Find max value of mf_out

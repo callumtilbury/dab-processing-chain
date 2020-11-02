@@ -37,6 +37,9 @@ function iq_data_raw = iq_read(file_name, file_datatype, ...
     % Convert data to Complex Doubles
     iq_data_raw = data_from_file(1:2:end) + 1j*data_from_file(2:2:end);
     clear data_all;
-       
+    
+    % Transpose
+    iq_data_raw = iq_data_raw.';
+    
 end
 
