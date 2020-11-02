@@ -1,13 +1,5 @@
 % Constants
-mode1.K         = 1536;
-mode1.L         = 76;
-mode1.Tnull     = 2656;
-mode1.Tu        = 2048;
-mode1.Tg        = 504;
-mode1.Ts        = mode1.Tu + mode1.Tg;
-mode1.Tf        = mode1.Tnull + mode1.L * mode1.Ts;
-mode1.mask      = [257:1024,1026:1793];
-dab_mode = mode1;
+dab_mode = load_dab_constants(1);
 
 %% Files
 
@@ -26,9 +18,9 @@ raw.dabRef = "/Volumes/clmtlbry-4/UCT/IV/S/EEE4022S/Data/DAB_data/raw data/DAB_d
 %% Actual Test
 file = rtl;
 
-X = preprocess(file.dabMeas, "double", 10, 0, 0, mode1, 2.048e6);
-X_hat = preprocess(file.dabRef, "double", 10, 0, 0, mode1, 2.048e6);
-X_tilde = remodulate(demodulate(X, mode1), mode1);
+X = preprocess(file.dabMeas, "double", 10, 0, 0, dab_mode, 2.048e6);
+X_hat = preprocess(file.dabRef, "double", 10, 0, 0, dab_mode, 2.048e6);
+X_tilde = remodulate(demodulate(X, dab_mode), dab_mode);
 
 E_R = X_tilde - X_hat;
 

@@ -1,16 +1,8 @@
 % Constants
-mode1.K         = 1536;
-mode1.L         = 76;
-mode1.Tnull     = 2656;
-mode1.Tu        = 2048;
-mode1.Tg        = 504;
-mode1.Ts        = mode1.Tu + mode1.Tg;
-mode1.Tf        = mode1.Tnull + mode1.L * mode1.Ts;
-mode1.mask      = [257:1024,1026:1793];
+dab_mode = load_dab_constants(1);
 
-
-X_in = randn([mode1.L, mode1.Tu]) + 1j*randn([mode1.L, mode1.Tu]);
-X_out = symbols_unpack(symbols_pack(X_in, mode1), mode1);
+X_in = randn([dab_mode.L, dab_mode.Tu]) + 1j*randn([dab_mode.L, dab_mode.Tu]);
+X_out = symbols_unpack(symbols_pack(X_in, dab_mode), dab_mode);
 
 e = X_in - X_out;
 
