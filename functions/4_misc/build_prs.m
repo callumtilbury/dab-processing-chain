@@ -4,10 +4,11 @@ function prs = build_prs(transmission_mode)
     % ---------------------------------------------------------------------
     % Usage:
     %  Inputs
-    %               n/a
+    %   > transmission_mode:    The DAB transmission mode for which the PRS
+    %                           will be generated
     %
     %  Outputs
-    %   > prs:      Phase Reference Symbol (for Mode 1)
+    %   > prs:      Phase Reference Symbol for given transmission mode
     %
     % ---------------------------------------------------------------------
     if (transmission_mode == 1)

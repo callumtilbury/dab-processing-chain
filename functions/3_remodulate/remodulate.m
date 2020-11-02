@@ -17,12 +17,12 @@ function dab_frame_remod = remodulate(dab_data, dab_mode)
     dab_data_interleaved = freq_interleave(dab_data, interleave_map, dab_mode);
 
     %% DQPSK MAP
-    prs = build_prs();
+    prs = build_prs(1);
     dab_carriers_remod = dqpsk_map(dab_data_interleaved, prs, dab_mode);
-
+    
     %% OFDM MUX
     dab_symbols_remod = ofdm_mux(dab_carriers_remod);
-
+    
     %% SYMBOLS PACK
     dab_frame_remod = symbols_pack(dab_symbols_remod, dab_mode);
     
