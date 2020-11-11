@@ -1,3 +1,4 @@
+
 % Constants
 mode1.K         = 1536;
 mode1.L         = 76;
@@ -7,6 +8,7 @@ mode1.Tg        = 504;
 mode1.Ts        = mode1.Tu + mode1.Tg;
 mode1.Tf        = mode1.Tnull + mode1.L * mode1.Ts;
 mode1.mask      = [257:1024,1026:1793];
+dab_mode = mode1;
 
 %% Files
 
@@ -54,9 +56,30 @@ file = RTL;
 
 
 for ii = 1:(file.frame_count-1)
-    %% My Chain
+    %% Preprocess
     dab_frame   = preprocess(file.dabMeas, file.type, file.frame_count, file.offset, ii, mode1, file.Fs);
-    [dab_data, ~, dab_data_raw] = demodulate(dab_frame, mode1);
+    
+    %% Demoduate
+    % SYMBOLS UNPACK
+    dab_symbols = symbols_unpack(dab_frame, dab_mode);
+
+    % OFDM MUX
+    dab_carriers = ofdm_demux(dab_symbols);
+    
+    % DQPSK DEMAP
+    dab_data_raw = dqpsk_demap(dab_carriers, dab_mode);
+    
+    % FREQ DEINTERLEAVE
+    map = build_interleave_map();
+    dab_data_deinterleaved = freq_deinterleave(dab_data_raw, map);
+
+    %% DQPSK SNAP
+    dab_data_snapped = dqpsk_snap(dab_data_deinterleaved);
+    
+    %% ERROR CORRECTION (Not yet implemented)
+    dab_data = error_correct(dab_data_snapped);
+    
+    % [dab_data, ~, dab_data_raw] = demodulate(dab_frame, mode1);
     dab_frame_r = remodulate(dab_data, mode1);
 
     dab_data_interleaved = freq_interleave(dab_data, build_interleave_map(), mode1);
