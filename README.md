@@ -25,7 +25,7 @@ The `demodulate` functionality was designed to demodulate a DAB frame, to a set 
 ![Demodulate Block Diagram](docs/demod.png)
 
 #### `./functions/3_remodulate`
-The `remodulate` functionality was designed to remodulate a DAB frame, to a perfectly reconstructed DAB frame. The sub-blocks for this function are shown below:
+The `remodulate` functionality was designed to remodulate the DAB data, to a perfectly reconstructed DAB frame. The sub-blocks for this function are shown below:
 ![Remodulate Block Diagram](docs/remod.png)
 
 #### `./functions/4_misc`
