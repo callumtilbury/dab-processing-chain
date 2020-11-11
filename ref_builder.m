@@ -1,60 +1,82 @@
+% ---------------------------------------------------------------------    
+% REF_BUILDER: Emulation of the Reference Builder application using 
+%               this DAB processing chain
+% ---------------------------------------------------------------------
 % Constants
-mode1.K         = 1536;
-mode1.L         = 76;
-mode1.Tnull     = 2656;
-mode1.Tu        = 2048;
-mode1.Tg        = 504;
-mode1.Ts        = mode1.Tu + mode1.Tg;
-mode1.Tf        = mode1.Tnull + mode1.L * mode1.Ts;
-mode1.mask      = [257:1024,1026:1793];
+dab_mode = load_dab_constants(1);
 
-% file_in = "/Volumes/clmtlbry-4/UCT/IV/S/EEE4022S/Data/DAB_data/Perfect Data/DAB_7A_188.928.bin";
-% file_in = "/Volumes/clmtlbry-4/UCT/IV/S/EEE4022S/Data/DAB_data/raw data/DAB_data.bin";
-% file_in = "/Volumes/clmtlbry-4/UCT/IV/S/EEE4022S/Data/DAB_data/RTL-SDR/DAB.bin";
-% file_in = "raw_data_out.dabRef";
-file_in = "DAB_data/CPT_data/dabcapture.bin";
+% File names
+perfect.name = "/Volumes/clmtlbry-4/UCT/IV/S/EEE4022S/Data/DAB_data/Perfect Data/DAB_7A_188.928.bin";
+raw.name = "/Volumes/clmtlbry-4/UCT/IV/S/EEE4022S/Data/DAB_data/raw data/DAB_data.bin";
+rtl.name = "/Volumes/clmtlbry-4/UCT/IV/S/EEE4022S/Data/DAB_data/RTL-SDR/DAB.bin";
 
-file_out = "cpt-data_data_out";
-file_type = "double";
-fs = 2.048e6;
+% File types
+perfect.file_type = "double";
+raw.file_type = "short";
+rtl.file_type = "short";
 
-n_aim = 1;
-file_offset = 0;
+% Fs values
+perfect.fs = 2.048e6;
+raw.fs = 2.5e6;
+rtl.fs = 2.048e6;
 
-[frames_in, first_prs, n_actual, original_data] = batch_preprocess(file_in, file_type, n_aim, file_offset, mode1, fs);
+% Output name
+perfect.file_out = "perfect-data-out";
+raw.file_out = "raw-data-out";
+rtl.file_out = "rtl-data-out";
 
+% File offset
+file_offset = 1e6;
+
+% Goal number of frames to process
+n_aim = 10;
+
+% File choice
+file = perfect;
+
+% Preprocess a set of multiple frames
+[frames_in, first_prs, n_actual, original_data] = batch_preprocess(file.name, file.type, n_aim, file_offset, dab_mode, file.fs);
+% Check if prs is on odd or even sample
 if (mod(first_prs,2) == 1)
     first_prs = first_prs - 1;
 end
 
-file_out_id = fopen(file_out + ".dabRef","wb");
-zero_offset_vals = zeros(1,2*(first_prs-mode1.Tnull-mode1.Tg));
+% Open output files
+file_out_id = fopen(file.file_out + ".dabRef","wb");
+symbols_out_id = fopen(file.file_out + ".symbRef","wb");
+
+% Prepend with zeros until PRS
+zero_offset_vals = zeros(1,2*(first_prs-dab_mode.Tnull-dab_mode.Tg));
 fwrite(file_out_id,zero_offset_vals,"double");
 
+%% REFERENCE FILE OUTPUT
+% Process the frame
 for ii = 1:n_actual
-    tmp_out = remodulate(demodulate(frames_in(ii,:), mode1), mode1);
-    tmp_raw = zeros(1,2*mode1.Tf);
-    tmp_raw(1:2:end) = real(tmp_out);
-    tmp_raw(2:2:end) = imag(tmp_out);
+    % Recording -> Demod -> Remod -> Recording
+    [tmp_demod, tmp_carriers] = demodulate(frames_in(ii,:), dab_mode);
+    tmp_remod = remodulate(tmp_demod, dab_mode);
+    tmp_raw = zeros(1,2*dab_mode.Tf);
+    tmp_raw(1:2:end) = real(tmp_remod);
+    tmp_raw(2:2:end) = imag(tmp_remod);
     fwrite(file_out_id,tmp_raw,"double");
+    
+    % Symbols
+    for jj = 1:dab_mode.L
+        tmp_symbols = zeros(1,2*dab_mode.K);
+        tmp_symbols(1:2:end) = real(tmp_carriers(jj,dab_mode.mask));
+        tmp_symbols(2:2:end) = imag(tmp_carriers(jj,dab_mode.mask));
+        fwrite(symbols_out_id,tmp_symbols,"double");
+    end
 end
-
+% Clean up
 fclose(file_out_id);
 
-mychain_data = iq_read(file_out + ".dabRef", "double", n_aim, 0, mode1);
-
-meas_file_out_id = fopen(file_out + ".dabMeas", "wb");
+%% MEASURED FILE OUT
+meas_file_out_id = fopen(file.file_out + ".dabMeas", "wb");
 tmp_meas = zeros(1,2*length(original_data));
 tmp_meas(1:2:end) = real(original_data);
 tmp_meas(2:2:end) = imag(original_data);
 fwrite(meas_file_out_id, tmp_meas, "double");
 
 fclose(meas_file_out_id);
-
-figure(1);
-hold off;
-plot(abs(original_data));
-hold on;
-plot(abs(mychain_data));
-
 
