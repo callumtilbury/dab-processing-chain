@@ -1,5 +1,16 @@
 function dab_mode = load_dab_constants(transmission_mode)
-    
+    % ---------------------------------------------------------------------    
+    % LOAD_DAB_CONSTANTS: Return the paramters for a DAB mode
+    %                           (currently for Mode 1 only)
+    % ---------------------------------------------------------------------
+    % Usage:
+    %  Inputs
+    %   > transmission_mode:    The DAB transmission mode
+    %
+    %  Outputs
+    %   > dab_mode:      The relevant parameters
+    %
+    % ---------------------------------------------------------------------
     if (transmission_mode == 1)
         dab_mode.K         = 1536;
         dab_mode.L         = 76;
