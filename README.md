@@ -33,11 +33,11 @@ This folder contains the utility/helper functions used in the processing chain.
 
 ---
 
-### > `./demos`
+### `./demos`
 This folder contains a variety of scripts used for creating the plots used in the final report.
 
 ---
 
-### > `./tests`
+### `./tests`
 This folder contains the scripts used in the *Validation* section of the report.
 
