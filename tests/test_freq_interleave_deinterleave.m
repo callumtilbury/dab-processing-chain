@@ -1,3 +1,6 @@
+% ---------------------------------------------------------------------    
+% TEST_FREQ_INTERLEAVE_DEINTERLEAVE: Freq int/deint Inverse test
+% ---------------------------------------------------------------------
 % Constants
 dab_mode = load_dab_constants(1);
 

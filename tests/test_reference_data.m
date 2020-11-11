@@ -1,3 +1,7 @@
+% ---------------------------------------------------------------------    
+% TEST_REFERENCE_DATA: Test full chain with reference data
+% ---------------------------------------------------------------------
+
 % Constants
 dab_mode = load_dab_constants(1);
 
@@ -16,7 +20,7 @@ raw.dabMeas = "/Volumes/clmtlbry-4/UCT/IV/S/EEE4022S/Data/DAB_data/raw data/DAB_
 raw.dabRef = "/Volumes/clmtlbry-4/UCT/IV/S/EEE4022S/Data/DAB_data/raw data/DAB_data.dabRef";
 
 %% Actual Test
-file = rtl;
+file = perfect;
 
 X = preprocess(file.dabMeas, "double", 10, 0, 0, dab_mode, 2.048e6);
 X_hat = preprocess(file.dabRef, "double", 10, 0, 0, dab_mode, 2.048e6);

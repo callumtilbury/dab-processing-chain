@@ -1,23 +1,30 @@
+% ---------------------------------------------------------------------    
+% TEST_REPEATED_PROCESSING: Test chain with two iterations
+% ---------------------------------------------------------------------
 % Constants
 dab_mode = load_dab_constants(1);
 
+% Files
 perfect.name = "/Volumes/clmtlbry-4/UCT/IV/S/EEE4022S/Data/DAB_data/Perfect Data/DAB_7A_188.928.bin";
 rtl.name = "/Volumes/clmtlbry-4/UCT/IV/S/EEE4022S/Data/DAB_data/RTL-SDR/DAB.bin";
 raw.name = "/Volumes/clmtlbry-4/UCT/IV/S/EEE4022S/Data/DAB_data/raw data/DAB_data.bin";
 
+% Types
 perfect.type = "double";
 rtl.type = "short";
 raw.type = "short";
 
+% Fs
 perfect.fs = 2.048e6;
 rtl.fs = 2.048e6;
 raw.fs = 2.5e6;
 
+% Offsets
 perfect.offset = 1e6;
 rtl.offset = 0;
 raw.offset = 0;
 
-%%
+% Choose file
 file = perfect;
 
 % X -> Remod -> Demod -> X
