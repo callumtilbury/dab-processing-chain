@@ -2,6 +2,7 @@
 
 This repository contains the MATLAB code that was written for an undergraduate final-year project (EEE4022S) at the University of Cape Town. The aim of the project was to design a Digital Audio Broadcasting (DAB) processing chain for the context of Passive Radar.
 
+A description of the various scripts and functions contained within this directory is given below.
 
 ---
 ### `./ref_builder.m`
