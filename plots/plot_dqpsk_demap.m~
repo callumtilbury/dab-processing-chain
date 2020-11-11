@@ -1,0 +1,70 @@
+% ---------------------------------------------------------------------    
+% PLOT_DQPSK_DEMAP: Plots a demo of DQPSK outputs
+% ---------------------------------------------------------------------
+% Constants
+dab_mode = load_dab_constants(1);
+
+% File locations
+perfect.z = preprocess("/Volumes/clmtlbry-4/UCT/IV/S/EEE4022S/Data/DAB_data/Perfect Data/DAB_7A_188.928.bin", "double", 1, 1e6, 0, dab_mode, 2.048e6);
+raw.z = preprocess("/Volumes/clmtlbry-4/UCT/IV/S/EEE4022S/Data/DAB_data/raw data/DAB_data.bin", "short", 2, 0, 0, mode1, 2.5e6);
+rtl.z = preprocess("/Volumes/clmtlbry-4/UCT/IV/S/EEE4022S/Data/DAB_data/RTL-SDR/DAB.bin", "short", 2, 0, 0, dab_mode, 2.048e6);
+
+% Choose which file to use
+file = rtl;
+
+% Plot colour
+colour = [0, 0.4470, 0.7410];
+
+% --
+
+% Symbols
+s = symbols_unpack(file.z, dab_mode);
+
+% Carriers
+c = ofdm_demux(s);
+
+% DQPSK Data
+d = dqpsk_demap(c, dab_mode);
+
+% Plot D
+figure(1);
+    plot(c(1,mode1.mask),'bo',   'MarkerFaceColor', colour, ...
+                            'MarkerSize',7);
+grid on;
+xline(0,'k',"Im");
+yline(0,'k',"Re");
+m = max(abs(c(1,mode1.mask))) * 1.1;
+axis([-m m -m m]);
+
+
+figure(2);
+plot(c(2,mode1.mask),'bo',   'MarkerFaceColor', colour, ...
+                            'MarkerSize',7);
+grid on;
+xline(0,'k',"Im");
+yline(0,'k',"Re");
+m = max(abs(c(2,mode1.mask))) * 1.1;
+axis([-m m -m m]);
+
+figure(3);
+plot(c(2,mode1.mask) ./ c(1,mode1.mask), ...
+                    'bo', 'MarkerFaceColor', colour, ...
+                            'MarkerSize',7);
+grid on;
+xline(0,'k',"Im");
+yline(0,'k',"Re");
+m = max(abs(c(2,mode1.mask) ./ c(1,mode1.mask))) * 1.1;
+axis([-m m -m m]);
+
+
+for ii = 2:2
+    figure(ii);
+    plot(d(ii,1:4:end), 'o', 'MarkerFaceColor', colour, ...
+                                    'MarkerSize',7);
+    grid on;
+    xline(0,'k',"Im");
+    yline(0,'k',"Re");
+    m = 1.8;
+    axis([-m m -m m]);
+  
+end 

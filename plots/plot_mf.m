@@ -1,37 +1,37 @@
+% ---------------------------------------------------------------------    
+% PLOT_FREQ_DEINTERLEAVE: Plots a demo of the Frequnecy Deinterleaving
+% ---------------------------------------------------------------------
 % Constants
-mode1.K         = 1536;
-mode1.L         = 76;
-mode1.Tnull     = 2656;
-mode1.Tu        = 2048;
-mode1.Tg        = 504;
-mode1.Ts        = mode1.Tu + mode1.Tg;
-mode1.Tf        = mode1.Tnull + mode1.L * mode1.Ts;
-mode1.mask      = [257:1024,1026:1793];
+dab_mode = load_dab_constants(1);
 
-dab_mode = mode1;
+% File locations
+perfect.z = iq_read("/Volumes/clmtlbry-4/UCT/IV/S/EEE4022S/Data/DAB_data/Perfect Data/DAB_7A_188.928.bin", "double", 1, 1e6, dab_mode);
+raw.z = iq_read("/Volumes/clmtlbry-4/UCT/IV/S/EEE4022S/Data/DAB_data/raw data/DAB_data.bin", "short", 2, 0, dab_mode);
+raw.z = iq_resample(raw.z, 2.5e6); % Raw data not sampled at 2.048MHz
+rtl.z = iq_read("/Volumes/clmtlbry-4/UCT/IV/S/EEE4022S/Data/DAB_data/RTL-SDR/DAB.bin", "short", 2, 0, dab_mode);
 
-% iq_data = iq_read("/Volumes/clmtlbry-4/UCT/IV/S/EEE4022S/Data/DAB_data/Perfect Data/DAB_7A_188.928.bin", "double", 3, 2e6, mode1);
-% iq_data = iq_read("/Volumes/clmtlbry-4/UCT/IV/S/EEE4022S/Data/DAB_data/RTL-SDR/DAB.bin", "short", 1, 1e6 + 5000, mode1);
-iq_data_raw = iq_read("/Volumes/clmtlbry-4/UCT/IV/S/EEE4022S/Data/DAB_data/raw data/DAB_data.bin", "short", 10, 0, mode1);
-iq_data = iq_resample(iq_data_raw, 2.5e6);
+% Choose which file to use
+file = rtl;
 
+% Time axis
 fs = 2.048e6;
 dt = 1/fs * 1e3;
-t = 0:dt:(length(z)-1)*dt;
+t = 0:dt:(length(file.z)-1)*dt;
 
-prs = build_prs();
-% 
-% figure(3);
-% plot(abs(iq_data));
+% Phase Reference
+prs = build_prs(1);
 
+% Plot full signal
+figure(3);
+plot(abs(iq_data));
+
+% Iterate through signal
 for jj = 0:10:3000
-    iq_data = circshift(iq_data, jj);
-
     % Move through iq_data, in steps of dab_mode.Tu/2
     % i.e. Advance 1/2 window length on each iteration
     for ii = 1:dab_mode.Tu/2:length(iq_data)
-    %     figure(3);
-    %     line = xline(ii, 'r');
+        figure(3);
+        line = xline(ii, 'r');
 
         mf_data_in = iq_data(ii:ii+dab_mode.Tu-1);
 
