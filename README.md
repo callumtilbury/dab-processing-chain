@@ -6,7 +6,7 @@ A description of the various scripts and functions contained within this directo
 
 ---
 ### `./ref_builder.m`
-This script emulated the functionality of the RefBuilder application, using the designed DAB chain. It receives a DAB recording and produces a perfectly reconstructed version thereof, along with the extracted DAB symbols.
+This script emulates the functionality of a RefBuilder application, using the designed DAB chain. It receives a DAB recording and produces a perfectly reconstructed version thereof, along with the extracted DAB symbols.
 
 ---
 
