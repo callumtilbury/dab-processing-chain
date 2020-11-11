@@ -46,7 +46,7 @@ function [dab_frames, first_prs, frame_count_actual, iq_data_meas] = ...
     iq_data_meas = iq_data;
     
     %% PRS DETECT
-    prs = build_prs();
+    prs = build_prs(1);
     first_prs = -1;
     
     % Assume that desired frame count will be read
