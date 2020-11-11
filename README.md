@@ -1,20 +1,21 @@
-# Digital Audio Broadcasting Processing Chain for Passive Radar Applications
+## Digital Audio Broadcasting Processing Chain for Passive Radar Applications
 
-This repository contains the *MATLAB* code that was written for an undergraduate final-year project (EEE4022S) at the University of Cape Town.
+This repository contains the *MATLAB* code that was written for an undergraduate final-year project (EEE4022S) at the University of Cape Town. The aim of the project was to design a Digital Audio Broadcasting (DAB) processing chain for the context of Passive Radar.
 
 
-
-## Functions
+### ./functions
 This directory contains the core functionality of the designed DAB processing chain. An overview of the chain is shown below:
 
 ![Overview Block Diagram](docs/overview.png)
 
-### Pre-processing
+#### ./functions/1_preprocess
 ![Pre-process Block Diagram](docs/preprocess.png)
 
-### Demodulation
+#### ./functions/2_demodulate
 ![Demodulate Block Diagram](docs/demod.png)
 
-### Remodulation
+#### ./functions/3_remodulate
 ![Remodulate Block Diagram](docs/remod.png)
 
+#### ./functions/4_misc
+This directory contains utility functions for the processing chain.
